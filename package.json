@@ -28,6 +28,8 @@
     "request": "~2.28.0"
   },
   "devDependencies": {
+    "es5-shim":"~2.3.0",
+    "ua-parser-js":"~0.6.2",
     "commander": "~2.1.0",
     "watchify": "~0.4.1",
     "uglify-js": "~2.4.6",
@@ -53,6 +55,7 @@
   "scripts": {
     "jshint": "jshint -c .jshintrc bin/ lib/ tests/*.js tests/performance/*.js",
     "build": "./bin/build-js.sh",
+    "postinstall":"git rev-parse HEAD^1 > tests/deps/pouch-commit.txt",
     "test-node": "./bin/run-mocha.sh",
     "test-browser": "npm run build && ./bin/test-browser.js",
     "dev": "./bin/dev-server.js",
