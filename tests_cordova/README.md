@@ -9,18 +9,21 @@ Before running the tests
 1. [Install cordova](http://cordova.apache.org/docs/en/3.3.0/guide_cli_index.md.html)
 2. Install SDKs for the platforms that you plan to test. For example, to test on android you must first [install android sdk](https://developer.android.com/tools/index.html) and then [install android virtual device](http://developer.android.com/tools/devices/managing-avds-cmdline.html).
 3. After cloning this repo you must add platforms to the tests_cordova project. For example, if you have ios and android SDKs installed then you can add platforms with commands:
+
 ```
+npm install
+npm run build-cordova
 cd tests_cordova
 cordova platform add android
 cordova platforms add ios
 ```
-
 
 How to run the tests
 -------------
 
 * Build pouchdb
 * Ensure that couchdb is running in localhost:5984
+* Better yet, ensure you're running the dev tests with `npm run dev`. This will set up a CORS proxy to CouchDB at `localhost:2020`, which you can use to access CouchDB from a non-emulator device using its absolute URL on your network.
 * Run tests in an emulator `cordova emulate android` or you can also use a real device `cordova run ios`
 * After a while the emulator is started and test runner is loaded. Now you can see the test runner. ![Start screen](https://raw.github.com/spMatti/pouchdb/master/tests_cordova/doc/images/android_start.png "Start screen")
 * From the dropdown you can select what tests are run. ![Select tests](https://raw.github.com/spMatti/pouchdb/master/tests_cordova/doc/images/android_select_test.png "Select tests")
