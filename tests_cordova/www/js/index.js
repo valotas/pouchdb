@@ -54,7 +54,11 @@ window.app = {
       testFile.options[testFile.options.length] = new Option(file, file);
     }
     var host = document.getElementById("host");
-    host.value = 'http://10.0.2.2:5984';
+    if (window.localStorage && window.localStorage['couchdb_host']) {
+      host.value = window.localStorage['couchdb_host'];
+    } else {
+      host.value = 'http://10.0.2.2:5984';
+    }
 
     var parentElement = document.getElementById(id);
     var listeningElement = parentElement.querySelector('.listening');
@@ -69,6 +73,11 @@ window.app = {
   test: function () {
     var testFile = document.getElementById("testfile");
     var host = document.getElementById("host");
+
+    if (window.localStorage) {
+      window.localStorage['couchdb_host'] = host.value;
+    }
+
     var url = "tests/test.html?host=" + host.value;
     if (testFile.value) {
       url += "&grep=" + testFile.value;
