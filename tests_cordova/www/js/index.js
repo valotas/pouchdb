@@ -36,18 +36,21 @@ window.app = {
   // The scope of 'this' is the event. In order to call the 'receivedEvent'
   // function, we must explicity call 'app.receivedEvent(...);'
   onDeviceReady: function () {
-    window.app.receivedEvent('deviceready');
+    var script = document.createElement('script');
+    script.src = 'tests/all-test-files.js';
+    document.getElementsByTagName('body')[0].appendChild(script);
+    var intervalId = window.setInterval(function () {
+      if (window.allTestFiles) {
+        clearInterval(intervalId);
+        window.app.init('deviceready');
+      }
+    }, 10);
   },
   // Update DOM on a Received Event
-  receivedEvent: function (id) {
+  init: function (id) {
     var testFile = document.getElementById("testfile");
-    var allTestFiles = [];
-    var scripts = document.getElementsByTagName('script');
-    for (var i = 0; i < scripts.length; i++) {
-      allTestFiles.push(scripts[i].getAttribute('src'));
-    }
-    for (var index in allTestFiles) {
-      var file = allTestFiles[index];
+    for (var i = 0; i < window.allTestFiles.length; i++) {
+      var file = window.allTestFiles[i];
       testFile.options[testFile.options.length] = new Option(file, file);
     }
     var host = document.getElementById("host");
@@ -60,12 +63,17 @@ window.app = {
     listeningElement.setAttribute('style', 'display:none;');
     receivedElement.setAttribute('style', 'display:block;');
 
-    console.log('Received Event: ' + id);
+    console.log('Initialized!');
   },
   // go to test page
   test: function () {
     var testFile = document.getElementById("testfile");
     var host = document.getElementById("host");
-    window.location = "tests/test.html?grep=" + testFile.value + "&host=" + host.value;
+    var url = "tests/test.html?host=" + host.value;
+    if (testFile.value) {
+      url += "&grep=" + testFile.value;
+    }
+
+    window.location = url;
   }
 };

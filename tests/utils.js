@@ -15,14 +15,15 @@ function uniq(list) {
 testUtils.couchHost = function() {
   if (typeof module !== 'undefined' && module.exports) {
     return process.env.COUCH_HOST || 'http://localhost:5984';
-  } else if (global.window && global.window.cordova) {
-    var host;
-    if (global.window.search) {
-      var match = global.window.search.match(/[?&]host=([^&]+)/);
-      host = match && match[1];
+  } else if (global.window && global.window.location &&
+      global.window.location.search) {
+    var match = global.window.location.search.match(/[?&]host=([^&]+)/);
+    var host = match && match[1];
+    if (host) {
+      return host;
     }
-    return host || 'http://10.0.2.2:5984';
   }
+  console.log('global.window ' + global.window);
   // In the browser we default to the CORS server, in future will change
   return 'http://localhost:2020';
 }
