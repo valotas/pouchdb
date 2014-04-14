@@ -1,1 +1,4 @@
-{"id":"com.pouchdb.tests","name":"PouchDbTestRunner"}
+{
+    "id": "com.pouchdb.tests",
+    "name": "PouchDB Test Runner"
+}
