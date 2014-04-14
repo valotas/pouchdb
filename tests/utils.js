@@ -12,7 +12,7 @@ function uniq(list) {
   return Object.keys(map);
 }
 
-testUtils.couchHost = function() {
+testUtils.couchHost = function () {
   if (typeof module !== 'undefined' && module.exports) {
     return process.env.COUCH_HOST || 'http://localhost:5984';
   } else if (global.window && global.window.location &&
@@ -23,10 +23,9 @@ testUtils.couchHost = function() {
       return host;
     }
   }
-  console.log('global.window ' + global.window);
   // In the browser we default to the CORS server, in future will change
   return 'http://localhost:2020';
-}
+};
 
 testUtils.makeBlob = function (data, type) {
   if (typeof module !== 'undefined' && module.exports) {
