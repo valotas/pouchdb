@@ -497,6 +497,28 @@ adapters.forEach(function (adapter) {
       });
     });
 
+    it('test inclusive_end with endKey', function (done) {
+      var db = new PouchDB(dbs.name);
+      db.bulkDocs({
+        docs: [
+          { _id: '0' },
+          { _id: '1' },
+          { _id: '2' }
+        ]
+      }).then(function () {
+        return db.allDocs({
+          startKey: 0,
+          endKey: 2,
+          inclusive_end: false
+        });
+      }).then(function (resp) {
+          resp.rows.should.have.length(2,
+            'inclusive_end=false used.' +
+            'The last document should not be included');
+          done();
+        });
+    });
+
     if (adapter === 'local') { // chrome doesn't like \u0000 in URLs
       it('test unicode ids and revs', function (done) {
         var db = new PouchDB(dbs.name);

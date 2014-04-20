@@ -138,6 +138,32 @@ adapters.forEach(function (adapters) {
       });
     });
 
+    it('Test opts.endkey/opts.inclusive_end', function (done) {
+      var db = new PouchDB(dbs.name);
+      db.bulkDocs({
+        docs: [
+          { key: 'key1' },
+          { key: 'key2' },
+          { key: 'key3' },
+        ]
+      }).then(function () {
+        var queryFun = {
+          map: function (doc) {
+            emit(doc.key, doc);
+          }
+        };
+        return db.query(queryFun, {
+          endKey: 'key3',
+          inclusive_end: false,
+          reduce: false
+        });
+      }).then(function (resp) {
+        resp.rows.should.have.length(2,
+          'endkey is not inclusive when inclusive_end=false');
+        done();
+      });
+    });
+
     it('Test opts.key', function (done) {
       var db = new PouchDB(dbs.name);
       db.bulkDocs({
