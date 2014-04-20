@@ -83,6 +83,7 @@ adapters.forEach(function (adapter) {
         function () {
         var keys = ['3', '1'];
         db.allDocs({ keys: keys }, function (err, result) {
+          console.log(err, result);
           result.rows.map(keyFunc).should.deep.equal(keys);
           keys = ['2', '0', '1000'];
           db.allDocs({ keys: keys }, function (err, result) {
