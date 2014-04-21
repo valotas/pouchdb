@@ -507,8 +507,8 @@ adapters.forEach(function (adapter) {
         ]
       }).then(function () {
         return db.allDocs({
-          startKey: 0,
-          endKey: 2,
+          startkey: '0',
+          endkey: '2',
           inclusive_end: false
         });
       }).then(function (resp) {
@@ -517,8 +517,8 @@ adapters.forEach(function (adapter) {
           'The last document should not be included');
       }).then(function () {
         return db.allDocs({
-          startKey: 1,
-          endKey: 2,
+          startkey: '1',
+          endkey: '2',
           inclusive_end: false
         });
       }).then(function (resp) {
