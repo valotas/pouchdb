@@ -525,6 +525,15 @@ adapters.forEach(function (adapter) {
         resp.rows.should.have.length(1,
           'inclusive_end=false used.' +
           'The last document should not be included');
+      }).then(function () {
+        return db.allDocs({
+          endkey: '1',
+          inclusive_end: false
+        });
+      }).then(function (resp) {
+        resp.rows.should.have.length(1,
+          'inclusive_end=false used.' +
+          'The last document should not be included');
         done();
       });
     });
