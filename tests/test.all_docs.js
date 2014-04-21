@@ -512,11 +512,21 @@ adapters.forEach(function (adapter) {
           inclusive_end: false
         });
       }).then(function (resp) {
-          resp.rows.should.have.length(2,
-            'inclusive_end=false used.' +
-            'The last document should not be included');
-          done();
+        resp.rows.should.have.length(2,
+          'inclusive_end=false used.' +
+          'The last document should not be included');
+      }).then(function () {
+        return db.allDocs({
+          startKey: 1,
+          endKey: 2,
+          inclusive_end: false
         });
+      }).then(function (resp) {
+        resp.rows.should.have.length(1,
+          'inclusive_end=false used.' +
+          'The last document should not be included');
+        done();
+      });
     });
 
     if (adapter === 'local') { // chrome doesn't like \u0000 in URLs
